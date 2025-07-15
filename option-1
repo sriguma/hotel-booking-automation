@@ -52,77 +52,15 @@ class HotelBookingTest:
             return False
 
     def select_first_hotel(self):
-        try:
-            # Wait for search results and select first hotel
-            first_hotel = self.wait.until(
-                EC.element_to_be_clickable((By.CLASS_NAME, "hotel-item"))
-            )
-            # Store original price for later comparison
-            self.original_price = float(self.driver.find_element(
-                By.CLASS_NAME, "hotel-price").text.replace("$", ""))
-            first_hotel.click()
-            return True
-            
-        except Exception as e:
-            print(f"Error in select_first_hotel: {str(e)}")
-            return False
+
 
     def apply_coupon(self, coupon_code):
-        try:
-            # Find coupon input field and apply coupon
-            coupon_input = self.wait.until(
-                EC.presence_of_element_located((By.ID, "coupon-code"))
-            )
-            coupon_input.clear()
-            coupon_input.send_keys(coupon_code)
-            
-            apply_button = self.driver.find_element(By.ID, "apply-coupon")
-            apply_button.click()
-            
-            # Wait for discount to be applied
-            time.sleep(2)
-            
-            return True
-            
-        except Exception as e:
-            print(f"Error in apply_coupon: {str(e)}")
-            return False
 
     def verify_discount(self):
-        try:
-            # Get discounted price
-            discounted_price = float(self.driver.find_element(
-                By.CLASS_NAME, "final-price").text.replace("$", ""))
-            
-            # Calculate expected price (25% discount)
-            expected_price = self.original_price * 0.75
-            
-            # Verify discount is correct (allowing small difference for rounding)
-            assert abs(discounted_price - expected_price) < 0.01, \
-                "Discount not applied correctly"
-            
-            return True
-            
-        except Exception as e:
-            print(f"Error in verify_discount: {str(e)}")
-            return False
+
 
     def proceed_to_checkout(self):
-        try:
-            # Click checkout button
-            checkout_button = self.wait.until(
-                EC.element_to_be_clickable((By.ID, "checkout-button"))
-            )
-            checkout_button.click()
-            
-            # Verify we're on checkout page
-            assert "checkout" in self.driver.current_url.lower()
-            
-            return True
-            
-        except Exception as e:
-            print(f"Error in proceed_to_checkout: {str(e)}")
-            return False
+
 
     def cleanup(self):
         # Close browser
